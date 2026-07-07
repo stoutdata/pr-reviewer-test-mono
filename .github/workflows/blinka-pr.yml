@@ -1,0 +1,51 @@
+name: blinka-pr
+
+# Reusable build for product A. Called by ci-pipeline.yml, so the uploaded
+# artifacts belong to the caller's workflow run. The artifact name is
+# DYNAMIC (run number) and a `-manual` decoy sibling is uploaded on purpose —
+# the PR reviewer must select by anchored pattern (^blinka-v[0-9.]+$), never
+# by prefix guessing.
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    name: Build blinka firmware
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Prebuilt binary — avoids `cargo install` trying to build a host tool
+      # against the product's embedded default target (.cargo/config.toml).
+      - name: Install cargo-binutils
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-binutils
+
+      # rust-toolchain.toml (repo root) auto-provisions stable +
+      # thumbv8m.main-none-eabihf + llvm-tools-preview on first invocation.
+      # Build from the product's own directory (project-aware CWD).
+      - name: Build + objcopy to raw binary
+        working-directory: blinka
+        run: cargo objcopy --release -- -O binary blinka.bin
+
+      # The artifact carries the flashable image AND the ELF: the product's
+      # lager test declares the ELF as an input (testArtifactFiles), staged
+      # next to it on the box.
+      - name: Upload firmware artifact (dynamic name)
+        uses: actions/upload-artifact@v4
+        with:
+          name: blinka-v0.0.0.${{ github.run_number }}
+          path: |
+            blinka/blinka.bin
+            blinka/target/thumbv8m.main-none-eabihf/release/blinka
+          if-no-files-found: error
+
+      - name: Upload decoy artifact (pattern discipline)
+        uses: actions/upload-artifact@v4
+        with:
+          name: blinka-v0.0.0.${{ github.run_number }}-manual
+          path: blinka/blinka.bin
+          if-no-files-found: error

@@ -1,0 +1,8 @@
+# Pin the toolchain repo-wide so local builds and CI auto-provision the
+# embedded target and llvm-tools-preview (needed by `cargo objcopy`).
+# Builds run from each product's own directory (per-product .cargo/config.toml
+# pins the target), and rustup resolves this file by walking up from there.
+[toolchain]
+channel = "stable"
+targets = ["thumbv8m.main-none-eabihf"]
+components = ["llvm-tools-preview"]

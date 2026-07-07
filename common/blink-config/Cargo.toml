@@ -1,0 +1,7 @@
+[package]
+name = "blink-config"
+version = "0.1.0"
+edition = "2021"
+description = "Shared blink-period policy used by every product in this monorepo"
+
+[dependencies]
