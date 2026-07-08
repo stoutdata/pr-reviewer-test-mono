@@ -1,0 +1,7 @@
+[package]
+name = "monitor-config"
+version = "0.1.0"
+edition = "2021"
+description = "Shared SAADC-code-to-millivolts policy used by the analog products in this monorepo"
+
+[dependencies]

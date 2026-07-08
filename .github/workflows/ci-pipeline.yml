@@ -26,6 +26,7 @@ jobs:
     outputs:
       blinka: ${{ steps.filter.outputs.blinka }}
       blinkb: ${{ steps.filter.outputs.blinkb }}
+      voltmon: ${{ steps.filter.outputs.voltmon }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,6 +45,11 @@ jobs:
               - 'common/**'
               - '.github/workflows/blinkb-pr.yml'
               - '.github/workflows/ci-pipeline.yml'
+            voltmon:
+              - 'voltmon/**'
+              - 'common/**'
+              - '.github/workflows/voltmon-pr.yml'
+              - '.github/workflows/ci-pipeline.yml'
 
   build-blinka:
     name: blinka
@@ -56,3 +62,9 @@ jobs:
     needs: changes
     if: needs.changes.outputs.blinkb == 'true'
     uses: ./.github/workflows/blinkb-pr.yml
+
+  build-voltmon:
+    name: voltmon
+    needs: changes
+    if: needs.changes.outputs.voltmon == 'true'
+    uses: ./.github/workflows/voltmon-pr.yml

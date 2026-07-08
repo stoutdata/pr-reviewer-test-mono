@@ -1,0 +1,12 @@
+# Default every cargo build in this product directory to the nRF5340
+# application core (Cortex-M33F) — the firmware-mono "project-aware CWD"
+# convention: run cargo from voltmon/, never from the repo root.
+#
+# NOTE: because this pins an embedded default target, do NOT run
+# `cargo install <host-tool>` from inside this directory — run it from your
+# home dir. CI installs cargo-binutils as a prebuilt binary instead.
+[build]
+target = "thumbv8m.main-none-eabihf"
+
+[target.thumbv8m.main-none-eabihf]
+rustflags = ["-C", "link-arg=-Tlink.x"]
