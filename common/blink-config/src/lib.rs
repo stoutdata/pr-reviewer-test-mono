@@ -14,3 +14,9 @@ pub const BASE_PERIOD_MS: u16 = 100;
 pub const fn period_ms(multiplier: u16) -> u16 {
     BASE_PERIOD_MS * multiplier
 }
+
+/// Half of a product's period — a convenience for diagnostics that sample
+/// at twice the blink rate.
+pub const fn half_period_ms(multiplier: u16) -> u16 {
+    period_ms(multiplier) / 2
+}
