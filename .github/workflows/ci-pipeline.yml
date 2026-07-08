@@ -18,7 +18,10 @@ jobs:
   changes:
     name: Detect changed products
     runs-on: ubuntu-22.04
+    # An explicit permissions block REPLACES the defaults — checkout still
+    # needs contents:read (a private repo 404s as "not found" without it).
     permissions:
+      contents: read
       pull-requests: read
     outputs:
       blinka: ${{ steps.filter.outputs.blinka }}
