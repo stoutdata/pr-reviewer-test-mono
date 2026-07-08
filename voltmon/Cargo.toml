@@ -1,0 +1,21 @@
+[package]
+name = "voltmon"
+version = "0.1.0"
+edition = "2021"
+resolver = "2"
+description = "Product C — nRF5340 (app core) voltage-monitor firmware, Stout PR Reviewer monorepo fixture"
+
+[dependencies]
+monitor-config = { path = "../common/monitor-config" }
+cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7"
+embedded-hal = "1.0"
+nrf5340-app-hal = "0.19"
+panic-halt = "0.2"
+rtt-target = "0.6"
+
+[profile.release]
+opt-level = "s"
+lto = true
+debug = true
+codegen-units = 1
