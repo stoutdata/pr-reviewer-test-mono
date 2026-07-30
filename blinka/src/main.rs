@@ -58,4 +58,3 @@ fn main() -> ! {
     }
 }
 
-// trigger full hardware run
