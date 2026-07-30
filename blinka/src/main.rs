@@ -25,8 +25,8 @@ use rtt_target::{rprintln, rtt_init_print};
 #[allow(dead_code)]
 type BlinkVal = u8;
 
-/// This product blinks at 6x the shared base period (600 ms).
-const PERIOD_MULT: u16 = 6;
+/// This product blinks at 5x the shared base period (500 ms).
+const PERIOD_MULT: u16 = 5;
 const BLINK_PERIOD_MS: u16 = blink_config::period_ms(PERIOD_MULT);
 
 // The nRF5340 application core runs at 64 MHz out of reset.
@@ -57,3 +57,4 @@ fn main() -> ! {
         count = count.wrapping_add(1);
     }
 }
+
