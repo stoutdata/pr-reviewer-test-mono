@@ -57,3 +57,5 @@ fn main() -> ! {
         count = count.wrapping_add(1);
     }
 }
+
+// test: trigger PR reviewer via BYOK connection
