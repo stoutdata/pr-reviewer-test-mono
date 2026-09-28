@@ -33,7 +33,7 @@ def read_limits(path: pathlib.Path):
 
 
 @click.command()
-@click.option("--debug-net", default="debug1", show_default=True,
+@click.option("--debug-net", default="SWD", show_default=True,
               help="Debug net wired to this product's DUT.")
 @click.option("--limits", default="limits.csv", show_default=True,
               help="Limits table next to this test.")
